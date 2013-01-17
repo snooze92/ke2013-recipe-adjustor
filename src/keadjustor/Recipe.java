@@ -5,7 +5,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -71,8 +70,12 @@ public class Recipe {
 		}
 	}
 	
+	// Getters
 	public boolean isLoaded() {
 		return loaded;
+	}
+	public List<HasIngredient> getIngredients() {
+		return ingredients;
 	}
 	
 	// Sums
