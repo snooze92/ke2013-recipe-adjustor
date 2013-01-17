@@ -1,0 +1,23 @@
+{
+	"name": "Spaghetti",
+	"servings": 4,
+	"course": "main",
+	"ingredients": [
+		{
+			"name": "pasta",
+			"quantity": 400.0
+		},
+		{
+			"name": "tomato",
+			"quantity": 1200.0
+		},
+		{
+			"name": "onion",
+			"quantity": 350.0
+		},
+		{
+			"name": "minced meat",
+			"quantity": 400.0
+		}
+	]
+}

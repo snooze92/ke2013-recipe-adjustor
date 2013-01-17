@@ -1,0 +1,23 @@
+{
+	"name": "Chocolate cake",
+	"servings": 8,
+	"course": "dessert",
+	"ingredients": [
+		{
+			"name": "sugar",
+			"quantity": 200.0
+		},
+		{
+			"name": "flower",
+			"quantity": 250.0
+		},
+		{
+			"name": "chocolate",
+			"quantity": 60.0
+		},
+		{
+			"name": "butter",
+			"quantity": 80.0
+		}
+	]
+}

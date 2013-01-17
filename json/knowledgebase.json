@@ -1,0 +1,50 @@
+{
+	"ingredients": [
+		{
+			"name": "pasta",
+			"gl": 45.0, "carbs": 0.7, "fats": 0.01, "proteins": 0.1, "fibers": 0.03, "calories": 4.0
+		},
+		{
+			"name": "tomato",
+			"gl": 10.0, "carbs": 0.1, "fats": 0.0, "proteins": 0.0, "fibers": 0.0, "calories": 0.2
+		},
+		{
+			"name": "onion",
+			"gl": 4.0, "carbs": 0.06, "fats": 0.0, "proteins": 0.0, "fibers": 0.02, "calories": 0.1
+		},
+		{
+			"name": "minced meat",
+			"gl": 5.0, "carbs": 0.02, "fats": 0.3, "proteins": 0.4, "fibers": 0.0, "calories": 6.3
+		},
+		{
+			"name": "sugar",
+			"gl": 90.0, "carbs": 1.0, "fats": 0.0, "proteins": 0.0, "fibers": 0.0, "calories": 9.0
+		},
+		{
+			"name": "flower",
+			"gl": 70.0, "carbs": 0.8, "fats": 0.02, "proteins": 0.12, "fibers": 0.25, "calories": 4.2
+		},
+		{
+			"name": "chocolate",
+			"gl": 40.0, "carbs": 0.3, "fats": 0.12, "proteins": 0.03, "fibers": 0.0, "calories": 0.5
+		},
+		{
+			"name": "butter",
+			"gl": 30.0, "carbs": 0.02, "fats": 0.9, "proteins": 0.08, "fibers": 0.0, "calories": 12.0
+		}
+	],
+	"courses": [
+		{
+			"name": "breakfast",
+			"max_gl": 10.0
+		},
+		{
+			"name": "main",
+			"max_gl": 20.0
+		},
+		{
+			"name": "dessert",
+			"max_gl": 41.0
+		}
+	]
+}
