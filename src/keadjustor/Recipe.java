@@ -32,7 +32,7 @@ public class Recipe {
 			name = (String) jsonObj.get("name");
 			servings = (int) (long) jsonObj.get("servings");
 			String courseName = (String) jsonObj.get("course");
-			if ((course = KnowledgeBase.getInstance().getCourse(courseName)) == null) {
+			if ((course = KnowledgeBase.INSTANCE.getCourse(courseName)) == null) {
 				System.out.println(String.format("Fatal: The course '%s' is not part of the Knowledge Base.", courseName));
 				this.loaded = false;
 			}
@@ -45,7 +45,7 @@ public class Recipe {
 				for (Object i : jsonIngredients) {
 					JSONObject jsonIngredient = (JSONObject) i;
 					ingredientName = (String) jsonIngredient.get("name");
-					if ((ingredient = KnowledgeBase.getInstance().getIngredient(ingredientName)) == null) {
+					if ((ingredient = KnowledgeBase.INSTANCE.getIngredient(ingredientName)) == null) {
 						System.out.println(String.format("Fatal: The ingredient '%s' is not part of the Knowledge Base.", ingredientName));
 						this.loaded = false;
 					}
@@ -56,8 +56,6 @@ public class Recipe {
 					}
 				}
 			}
-			
-			
 		} catch (FileNotFoundException ex) {
 			System.out.println(String.format("File not found (%s)", ex.getMessage()));
 			this.loaded = false;
@@ -73,33 +71,77 @@ public class Recipe {
 		}
 	}
 	
-	public String getName() {
-		return name;
+	public boolean isLoaded() {
+		return loaded;
 	}
 	
+	// Sums
 	public double getGlycemicLoad() {
 		double sum = 0;
-		
 		for(HasIngredient i : ingredients) {
 			sum += i.getGlycemicLoad();
 		}
-		
+		return (sum / servings);
+	}
+	public double getCarbs() {
+		double sum = 0;
+		for(HasIngredient i : ingredients) {
+			sum += i.getFractionCarbs();
+		}
+		return (sum / servings);
+	}
+	public double getFats() {
+		double sum = 0;
+		for(HasIngredient i : ingredients) {
+			sum += i.getFractionFats();
+		}
+		return (sum / servings);
+	}
+	public double getProteins() {
+		double sum = 0;
+		for(HasIngredient i : ingredients) {
+			sum += i.getFractionProteins();
+		}
+		return (sum / servings);
+	}
+	public double getFibers() {
+		double sum = 0;
+		for(HasIngredient i : ingredients) {
+			sum += i.getFractionFibers();
+		}
+		return (sum / servings);
+	}
+	public double getCalories() {
+		double sum = 0;
+		for(HasIngredient i : ingredients) {
+			sum += i.getCalories();
+		}
 		return (sum / servings);
 	}
 	
-	public boolean checkGlycemicLoad() {
-		return getGlycemicLoad() < course.getMaxGlycemicLoad();
+	// Checks
+	public int checkGlycemicLoad() {
+		return course.checkGlycemicLoad(getGlycemicLoad());
+	}
+	public int checkCarbs() {
+		return course.checkCarbs(getCarbs());
+	}
+	public int checkFats() {
+		return course.checkFats(getFats());
+	}
+	public int checkProteins() {
+		return course.checkProteins(getProteins());
+	}
+	public int checkFibers() {
+		return course.checkFibers(getFibers());
+	}
+	public int checkCalories() {
+		return course.checkCalories(getCalories());
 	}
 	
 	@Override
 	public String toString() {
-		StringBuilder sb = new StringBuilder(String.format("RECIPE:\n\n%s for %d (%s)\n\nIngredients:\n", name, servings, course));
-		
-		for (HasIngredient i : ingredients) {
-			sb.append(String.format("%8.1f %s\n", i.getQuantity(), i.getIngredient().getName()));
-		}
-		
-		return sb.toString();
+		return String.format("Recipe: %s for %d (%s)", name, servings, course);
 	}
 }
 

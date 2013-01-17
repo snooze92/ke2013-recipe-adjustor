@@ -6,13 +6,20 @@ public class Main {
 			System.out.println("Usage: java -jar keadjustor.jar KB_PATH RECIPE_PATH");
 		}
 		else {
-			KnowledgeBase.getInstance().loadFile(args[0]);
-			System.out.println(KnowledgeBase.getInstance());
-			
-			System.out.println("=============================\n");
-			
-			Recipe recipe = new Recipe(args[1]);
-			System.out.println(recipe);
+			if (KnowledgeBase.INSTANCE.loadFile(args[0])) {
+				System.out.println(KnowledgeBase.INSTANCE);
+				
+				Recipe recipe = new Recipe(args[1]);
+				if (recipe.isLoaded()) {
+					System.out.println(recipe);
+				}
+				else {
+					System.out.println("Error(s) while loading the Recipe.");
+				}
+			}
+			else {
+				System.out.println("Error(s) while loading the Knowledge Base.");
+			}
 		}
 	}
 

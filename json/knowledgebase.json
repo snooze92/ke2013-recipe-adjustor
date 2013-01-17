@@ -36,15 +36,37 @@
 	"courses": [
 		{
 			"name": "breakfast",
-			"max_gl": 10.0
+			"gl": [ 0.0, 10.0 ],
+			"carbs": [ 0.0, 1000.0 ],
+			"fats": [ 0.0, 1000.0 ],
+			"proteins": [ 0.0, 1000.0 ],
+			"fibers": [ 0.0, 1000.0 ],
+			"calories": [ 0.0, 1000.0 ]
 		},
 		{
 			"name": "main",
-			"max_gl": 20.0
+			"gl": [ 0.0, 10.0 ],
+			"carbs": [ 0.0, 1000.0 ],
+			"fats": [ 0.0, 1000.0 ],
+			"proteins": [ 0.0, 1000.0 ],
+			"fibers": [ 0.0, 1000.0 ],
+			"calories": [ 0.0, 1000.0 ]
 		},
 		{
 			"name": "dessert",
-			"max_gl": 41.0
+			"gl": [ 0.0, 10.0 ],
+			"carbs": [ 0.0, 1000.0 ],
+			"fats": [ 0.0, 1000.0 ],
+			"proteins": [ 0.0, 1000.0 ],
+			"fibers": [ 0.0, 1000.0 ],
+			"calories": [ 0.0, 1000.0 ]
+		}
+	],
+	"substitutions": [
+		{
+			"replace": "tomato",
+			"with": "onion",
+			"scale": 1.4
 		}
 	]
 }

@@ -10,17 +10,12 @@ import org.json.simple.parser.ParseException;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONArray;
 
-public class KnowledgeBase {
-	private static KnowledgeBase instance = null;
+public enum KnowledgeBase {
+	INSTANCE();
+	
 	private Map<String, Ingredient> ingredients;
 	private Map<String, Course> courses;
-	
-	public static KnowledgeBase getInstance() {
-		if (instance == null) {
-			instance = new KnowledgeBase();
-		}
-		return instance;
-	}
+	// private Map<String, Substitution> substitutions;
 	
 	private KnowledgeBase() {
 		clear();
@@ -31,37 +26,56 @@ public class KnowledgeBase {
 		courses = new HashMap<String, Course>();
 	}
 	
-	public void loadFile(String filepath) {
+	public boolean loadFile(String filepath) {
 		// Note: loadFile does NOT clear first
 		
+		boolean loaded = false;
 		try {
 			JSONParser parser = new JSONParser();
 			JSONObject jsonObj = (JSONObject) parser.parse(new FileReader(filepath));
 			
+			// Load ingredients
 			JSONArray jsonIngredients = (JSONArray) jsonObj.get("ingredients");
 			String name;
 			for (Object i : jsonIngredients) {
 				JSONObject jsonIngredient = (JSONObject) i;
 				name = (String) jsonIngredient.get("name");
-				ingredients.put(name, new Ingredient(
-						name,
-						(double) jsonIngredient.get("gl"),
-						(double) jsonIngredient.get("carbs"),
-						(double) jsonIngredient.get("fats"),
-						(double) jsonIngredient.get("proteins"),
-						(double) jsonIngredient.get("fibers"),
-						(double) jsonIngredient.get("calories")));
+				// Get properties and add..
+				ingredients.put(name, new Ingredient.Builder(name)
+										.glycemicIndex((double) jsonIngredient.get("gl"))
+										.fractionCarbs((double) jsonIngredient.get("carbs"))
+										.fractionFats((double) jsonIngredient.get("fats"))
+										.fractionProteins((double) jsonIngredient.get("proteins"))
+										.fractionFibers((double) jsonIngredient.get("fibers"))
+										.calories((double) jsonIngredient.get("calories"))
+										.build());
 			}
 			
+			// Load courses
 			JSONArray jsonCourses = (JSONArray) jsonObj.get("courses");
+			Course.Builder courseProperties;
+			JSONArray interval;
 			for (Object course : jsonCourses) {
 				JSONObject jsonCourse = (JSONObject) course;
 				name = (String) jsonCourse.get("name");
-				courses.put(name, new Course(
-						name,
-						(double) jsonCourse.get("max_gl")));
+				// Get all properties
+				courseProperties = new Course.Builder(name);
+				interval = (JSONArray) jsonCourse.get("gl");
+				courseProperties.glycemicLoad((double) interval.get(0), (double) interval.get(1));
+				interval = (JSONArray) jsonCourse.get("carbs");
+				courseProperties.carbs((double) interval.get(0), (double) interval.get(1));
+				interval = (JSONArray) jsonCourse.get("fats");
+				courseProperties.fats((double) interval.get(0), (double) interval.get(1));
+				interval = (JSONArray) jsonCourse.get("proteins");
+				courseProperties.proteins((double) interval.get(0), (double) interval.get(1));
+				interval = (JSONArray) jsonCourse.get("fibers");
+				courseProperties.fibers((double) interval.get(0), (double) interval.get(1));
+				interval = (JSONArray) jsonCourse.get("calories");
+				courseProperties.calories((double) interval.get(0), (double) interval.get(1));
+				// Add..
+				courses.put(name, courseProperties.build());
 			}
-			
+			loaded = true;
 		} catch (FileNotFoundException ex) {
 			System.out.println(String.format("File not found (%s)", ex.getMessage()));
 		} catch (IOException ex) {
@@ -71,6 +85,7 @@ public class KnowledgeBase {
 		} catch (Exception ex) {
 			System.out.println(String.format("Error (%s)", ex.getMessage()));
 		}
+		return loaded;
 	}
 	
 	public Ingredient getIngredient(String name) {
@@ -83,23 +98,7 @@ public class KnowledgeBase {
 	
 	@Override
 	public String toString() {
-		StringBuilder sb = new StringBuilder("KNOWLEDGE BASE:\n\nIngredients:\n");
-		
-		sb.append("| NAME            |   GI.   |\n");
-		for (Ingredient i : ingredients.values()) {
-			sb.append(String.format("| %-15s | %7.2f |\n",
-					i.getName(),
-					i.getGlycemicIndex()));
-		}
-		
-		sb.append("\nCourses:\n");
-		sb.append("| NAME       | Max GL. |\n");
-		for (Course c : courses.values()) {
-			sb.append(String.format("| %-10s | %7.2f |\n",
-					c.getName(),
-					c.getMaxGlycemicLoad()));
-		}
-		
-		return sb.toString();
+		return String.format("Knowledge Base: %d ingredients, %d courses, %d substitutions",
+				ingredients.size(), courses.size(), 0 /* substitutions.size() */);
 	}
 }

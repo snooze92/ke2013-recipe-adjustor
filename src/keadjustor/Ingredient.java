@@ -1,7 +1,7 @@
 package keadjustor;
 
 public class Ingredient {
-	// Static properties
+	// Constant properties
 	private final String name;
 	private final double glycemicIndex;
 	private final double fractionCarbs;
@@ -10,22 +10,59 @@ public class Ingredient {
 	private final double fractionFibers;
 	private final double calories;
 	
-	// Constructor for KB
-	public Ingredient(
-			String name,
-			double glycemicIndex,
-			double fractionCarbs,
-			double fractionFats,
-			double fractionProteins,
-			double fractionFibers,
-			double calories) {
-		this.name = name;
-		this.glycemicIndex = glycemicIndex;
-		this.fractionCarbs = fractionCarbs;
-		this.fractionFats = fractionFats;
-		this.fractionProteins = fractionProteins;
-		this.fractionFibers = fractionFibers;
-		this.calories = calories;
+	// Builder
+	public static class Builder {
+		private final String name;
+		private double glycemicIndex;
+		private double fractionCarbs;
+		private double fractionFats;
+		private double fractionProteins;
+		private double fractionFibers;
+		private double calories;
+		
+		public Builder(String name) {
+			this.name = name;
+		}
+		
+		public Builder glycemicIndex(double val) {
+			glycemicIndex = val;
+			return this;
+		}
+		public Builder fractionCarbs(double val) {
+			fractionCarbs = val;
+			return this;
+		}
+		public Builder fractionFats(double val) {
+			fractionFats = val;
+			return this;
+		}
+		public Builder fractionProteins(double val) {
+			fractionProteins = val;
+			return this;
+		}
+		public Builder fractionFibers(double val) {
+			fractionFibers = val;
+			return this;
+		}
+		public Builder calories(double val) {
+			calories = val;
+			return this;
+		}
+		
+		public Ingredient build() {
+			return new Ingredient(this);
+		}
+	}
+	
+	// Private constructor
+	private Ingredient(Builder builder) {
+		name = builder.name;
+		glycemicIndex = builder.glycemicIndex;
+		fractionCarbs = builder.fractionCarbs;
+		fractionFats = builder.fractionFats;
+		fractionProteins = builder.fractionProteins;
+		fractionFibers = builder.fractionFibers;
+		calories = builder.calories;
 	}
 	
 	// Getters
