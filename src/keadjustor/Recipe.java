@@ -18,12 +18,12 @@ public class Recipe {
 	
 	private boolean loaded;
 	
-	private List<Ingredient> ingredients;
+	private List<HasIngredient> ingredients;
 	
 	// Construction from JSON file
 	public Recipe(String filepath) {
 		this.loaded = true;
-		this.ingredients = new ArrayList<Ingredient>();
+		this.ingredients = new ArrayList<HasIngredient>();
 		
 		try {
 			JSONParser parser = new JSONParser();
@@ -51,9 +51,8 @@ public class Recipe {
 					}
 					else {
 						// Copy to keep the knowledge base reference clean
-						ingredient = new Ingredient(ingredient);
-						ingredient.setQuantity((double) jsonIngredient.get("quantity"));
-						ingredients.add(ingredient);
+						double quantity = (double) jsonIngredient.get("quantity");
+						ingredients.add(new HasIngredient(quantity, ingredient));
 					}
 				}
 			}
@@ -81,7 +80,7 @@ public class Recipe {
 	public double getGlycemicLoad() {
 		double sum = 0;
 		
-		for(Ingredient i : ingredients) {
+		for(HasIngredient i : ingredients) {
 			sum += i.getGlycemicLoad();
 		}
 		
@@ -96,8 +95,8 @@ public class Recipe {
 	public String toString() {
 		StringBuilder sb = new StringBuilder(String.format("RECIPE:\n\n%s for %d (%s)\n\nIngredients:\n", name, servings, course));
 		
-		for (Ingredient i : ingredients) {
-			sb.append(String.format("%8.1f %s\n", i.getQuantity(), i.getName()));
+		for (HasIngredient i : ingredients) {
+			sb.append(String.format("%8.1f %s\n", i.getQuantity(), i.getIngredient().getName()));
 		}
 		
 		return sb.toString();

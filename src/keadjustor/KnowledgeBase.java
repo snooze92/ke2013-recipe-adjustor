@@ -1,7 +1,7 @@
 package keadjustor;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -12,8 +12,8 @@ import org.json.simple.JSONArray;
 
 public class KnowledgeBase {
 	private static KnowledgeBase instance = null;
-	private List<Ingredient> ingredients;
-	private List<Course> courses;
+	private Map<String, Ingredient> ingredients;
+	private Map<String, Course> courses;
 	
 	public static KnowledgeBase getInstance() {
 		if (instance == null) {
@@ -27,8 +27,8 @@ public class KnowledgeBase {
 	}
 
 	public void clear() {
-		ingredients = new ArrayList<Ingredient>();
-		courses = new ArrayList<Course>();
+		ingredients = new HashMap<String, Ingredient>();
+		courses = new HashMap<String, Course>();
 	}
 	
 	public void loadFile(String filepath) {
@@ -39,10 +39,12 @@ public class KnowledgeBase {
 			JSONObject jsonObj = (JSONObject) parser.parse(new FileReader(filepath));
 			
 			JSONArray jsonIngredients = (JSONArray) jsonObj.get("ingredients");
+			String name;
 			for (Object i : jsonIngredients) {
 				JSONObject jsonIngredient = (JSONObject) i;
-				ingredients.add(new Ingredient(
-						(String) jsonIngredient.get("name"),
+				name = (String) jsonIngredient.get("name");
+				ingredients.put(name, new Ingredient(
+						name,
 						(double) jsonIngredient.get("gl"),
 						(double) jsonIngredient.get("carbs"),
 						(double) jsonIngredient.get("fats"),
@@ -54,8 +56,9 @@ public class KnowledgeBase {
 			JSONArray jsonCourses = (JSONArray) jsonObj.get("courses");
 			for (Object course : jsonCourses) {
 				JSONObject jsonCourse = (JSONObject) course;
-				courses.add(new Course(
-						(String) jsonCourse.get("name"),
+				name = (String) jsonCourse.get("name");
+				courses.put(name, new Course(
+						name,
 						(double) jsonCourse.get("max_gl")));
 			}
 			
@@ -71,37 +74,27 @@ public class KnowledgeBase {
 	}
 	
 	public Ingredient getIngredient(String name) {
-		for (Ingredient i : ingredients) {
-			if (i.getName().equals(name)) {
-				return i;
-			}
-		}
-		return null;
+		return ingredients.get(name);
 	}
 	
 	public Course getCourse(String name) {
-		for (Course c : courses) {
-			if (c.getName().equals(name)) {
-				return c;
-			}
-		}
-		return null;
+		return courses.get(name);
 	}
 	
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder("KNOWLEDGE BASE:\n\nIngredients:\n");
 		
-		sb.append("| NAME            |   GL.   |\n");
-		for (Ingredient i : ingredients) {
+		sb.append("| NAME            |   GI.   |\n");
+		for (Ingredient i : ingredients.values()) {
 			sb.append(String.format("| %-15s | %7.2f |\n",
 					i.getName(),
-					i.getGlycemicLoad()));
+					i.getGlycemicIndex()));
 		}
 		
 		sb.append("\nCourses:\n");
 		sb.append("| NAME       | Max GL. |\n");
-		for (Course c : courses) {
+		for (Course c : courses.values()) {
 			sb.append(String.format("| %-10s | %7.2f |\n",
 					c.getName(),
 					c.getMaxGlycemicLoad()));
