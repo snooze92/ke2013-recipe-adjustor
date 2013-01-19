@@ -1,0 +1,56 @@
+{
+	"name": "Fast lasagne",
+	"servings": 6,
+	"course": "starter",
+	"cuisine": "Italian",
+	"ingredients": [
+		{
+			"name": "Olive oil",
+			"quantity": 8.0
+		},
+		{
+			"name": "Pork sausage",
+			"quantity": 450.0
+		},
+		{
+			"name": "Chilli pepper",
+			"quantity": 4.5
+		},
+		{
+			"name": "Garlic",
+			"quantity": 8.0
+		},
+		{
+			"name": "Button mushrooms",
+			"quantity": 150.0
+		},
+		{
+			"name": "Creme fraiche",
+			"quantity": 215.0
+		},
+		{
+			"name": "Spinach",
+			"quantity": 100.0
+		},
+		{
+			"name": "Tomato",
+			"quantity": 400.0
+		},
+		{
+			"name": "Tomato paste",
+			"quantity": 20.0
+		},
+		{
+			"name": "Sugar",
+			"quantity": 1.5
+		},
+		{
+			"name": "Lasagnette",
+			"quantity": 75.0
+		},
+		{
+			"name": "Cheddar",
+			"quantity": 50.0
+		}
+	]
+}

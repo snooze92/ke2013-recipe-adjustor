@@ -1,0 +1,56 @@
+{
+	"name": "Gingerbread pancakes",
+	"servings": 4,
+	"course": "breakfast",
+	"cuisine": "British",
+	"ingredients": [
+		{
+			"name": "Self-raising flour",
+			"quantity": 225.0
+		},
+		{
+			"name": "Brown sugar",
+			"quantity": 15.0
+		},
+		{
+			"name": "Ginger",
+			"quantity": 4.5
+		},
+		{
+			"name": "Baking powder",
+			"quantity": 1.0
+		},
+		{
+			"name": "Cinnamon",
+			"quantity": 1.0
+		},
+		{
+			"name": "Salt",
+			"quantity": 0.2
+		},
+		{
+			"name": "Milk",
+			"quantity": 300.0
+		},
+		{
+			"name": "Egg",
+			"quantity": 55.0
+		},
+		{
+			"name": "Sunflower oil",
+			"quantity": 24.0
+		},
+		{
+			"name": "Parma ham",
+			"quantity": 90.0
+		},
+		{
+			"name": "Maple syrup",
+			"quantity": 120.0
+		},
+		{
+			"name": "Creme fraiche",
+			"quantity": 100.0
+		}
+	]
+}

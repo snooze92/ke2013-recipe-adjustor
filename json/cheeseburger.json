@@ -1,0 +1,44 @@
+{
+	"name": "Cheeseburger",
+	"servings": 4,
+	"course": "light meal",
+	"cuisine": "North American",
+	"ingredients": [
+		{
+			"name": "Olive oil",
+			"quantity": 10.0
+		},
+		{
+			"name": "Onion",
+			"quantity": 80.0
+		},
+		{
+			"name": "Ground beef",
+			"quantity": 700.0
+		},
+		{
+			"name": "Chilli pepper",
+			"quantity": 30.0
+		},
+		{
+			"name": "Parsely",
+			"quantity": 6.0
+		},
+		{
+			"name": "Cheddar",
+			"quantity": 200.0
+		},
+		{
+			"name": "Baguette",
+			"quantity": 280.0
+		},
+		{
+			"name": "Yukon Gold potato",
+			"quantity": 380.0
+		},
+		{
+			"name": "Corn oil",
+			"quantity": 40.0,
+		}
+	]
+}

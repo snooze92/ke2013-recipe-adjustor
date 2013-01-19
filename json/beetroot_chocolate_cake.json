@@ -1,0 +1,40 @@
+{
+	"name": "Beetroot chocolate cake",
+	"servings": 6,
+	"course": "dessert",
+	"cuisine": "Irish",
+	"ingredients": [
+		{
+			"name": "Plain flour",
+			"quantity": 135.0
+		},
+		{
+			"name": "Chocolate",
+			"quantity": 200.0
+		},
+		{
+			"name": "Beet",
+			"quantity": 250.0
+		},
+		{
+			"name": "Baking powder",
+			"quantity": 1.0
+		},
+		{
+			"name": "Cocoa",
+			"quantity": 9.0
+		},
+		{
+			"name": "Caster sugar",
+			"quantity": 200.0
+		},
+		{
+			"name": "Egg",
+			"quantity": 280.0
+		},
+		{
+			"name": "Butter",
+			"quantity": 200.0,
+		}
+	]
+}

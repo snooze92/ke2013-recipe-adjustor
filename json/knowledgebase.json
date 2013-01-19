@@ -30,7 +30,7 @@
 		},
 		{
 			"name": "butter",
-			"gl": 30.0, "carbs": 0.02, "fats": 0.9, "proteins": 0.08, "fibers": 0.0, "calories": 12.0
+			"gl": 30.0, "carbs": 0.02, "fats": 0.9, "proteins": 0.06, "fibers": 0.0, "calories": 12.0
 		}
 	],
 	"courses": [
