@@ -14,7 +14,7 @@
 			"name": "Baguette",
 			"carbohydrate": 0.5644,
 			"saturated fat": 0.0049700000000000005,
-			"glycemic index": 0,
+			"glycemic index": 95,
 			"protein": 0.11750000000000001,
 			"kcal": 2.8919
 		},
@@ -32,7 +32,7 @@
 			"name": "Beet",
 			"carbohydrate": 0.0956,
 			"saturated fat": 0.00027,
-			"glycemic index": 0,
+			"glycemic index": 65,
 			"protein": 0.0161,
 			"kcal": 0.4302
 		},
@@ -50,7 +50,7 @@
 			"name": "Brown sugar",
 			"carbohydrate": 0.9809000000000001,
 			"saturated fat": 0.0,
-			"glycemic index": 0,
+			"glycemic index": 82,
 			"protein": 0.0012,
 			"kcal": 3.8001000000000005
 		},
@@ -68,7 +68,7 @@
 			"name": "Chili pepper",
 			"carbohydrate": 0.08810000000000001,
 			"saturated fat": 0.00042,
-			"glycemic index": 0,
+			"glycemic index": 9,
 			"protein": 0.0187,
 			"kcal": 0.39674000000000004
 		},
@@ -77,7 +77,7 @@
 			"name": "Chocolate",
 			"carbohydrate": 0.594,
 			"saturated fat": 0.18509,
-			"glycemic index": 0,
+			"glycemic index": 45,
 			"protein": 0.0765,
 			"kcal": 5.35121
 		},
@@ -100,11 +100,20 @@
 			"kcal": 2.28962
 		},
 		{
+			"fiber": 0.0,
+			"name": "Creme fraiche",
+			"carbohydrate": 0.03,
+			"saturated fat": 0.23,
+			"glycemic index": 0,
+			"protein": 0.03,
+			"kcal": 3.15
+		},
+		{
 			"fiber": 0.01,
 			"name": "Edible mushroom",
 			"carbohydrate": 0.032799999999999996,
 			"saturated fat": 0.00043,
-			"glycemic index": 0,
+			"glycemic index": 3,
 			"protein": 0.0309,
 			"kcal": 0.22466000000000003
 		},
@@ -122,7 +131,7 @@
 			"name": "Flour",
 			"carbohydrate": 0.7631,
 			"saturated fat": 0.00155,
-			"glycemic index": 0,
+			"glycemic index": 72,
 			"protein": 0.1033,
 			"kcal": 3.6399700000000004
 		},
@@ -131,7 +140,7 @@
 			"name": "Garlic",
 			"carbohydrate": 0.3306,
 			"saturated fat": 0.00089,
-			"glycemic index": 0,
+			"glycemic index": 6,
 			"protein": 0.0636,
 			"kcal": 1.4889700000000001
 		},
@@ -140,7 +149,7 @@
 			"name": "Ginger",
 			"carbohydrate": 0.1777,
 			"saturated fat": 0.00203,
-			"glycemic index": 0,
+			"glycemic index": 4,
 			"protein": 0.0182,
 			"kcal": 0.7958700000000001
 		},
@@ -167,7 +176,7 @@
 			"name": "Lasagnette",
 			"carbohydrate": 0.7467,
 			"saturated fat": 0.0027700000000000003,
-			"glycemic index": 0,
+			"glycemic index": 53,
 			"protein": 0.1304,
 			"kcal": 3.7116700000000002
 		},
@@ -185,7 +194,7 @@
 			"name": "Milk",
 			"carbohydrate": 0.0452,
 			"saturated fat": 0.01865,
-			"glycemic index": 0,
+			"glycemic index": 28,
 			"protein": 0.0322,
 			"kcal": 0.60228
 		},
@@ -212,16 +221,25 @@
 			"name": "Onion",
 			"carbohydrate": 0.0934,
 			"saturated fat": 0.00042,
-			"glycemic index": 0,
+			"glycemic index": 5,
 			"protein": 0.011000000000000001,
 			"kcal": 0.39674000000000004
+		},
+		{
+			"fiber": 0.06,
+			"name": "Oyster sauce",
+			"carbohydrate": 0.43,
+			"saturated fat": 0.00028,
+			"glycemic index": 28,
+			"protein": 0.06,
+			"kcal": 1.8367
 		},
 		{
 			"fiber": 0.033,
 			"name": "Parsley",
 			"carbohydrate": 0.0633,
 			"saturated fat": 0.00132,
-			"glycemic index": 0,
+			"glycemic index": 4,
 			"protein": 0.029700000000000004,
 			"kcal": 0.36089000000000004
 		},
@@ -248,7 +266,7 @@
 			"name": "Potato",
 			"carbohydrate": 0.1244,
 			"saturated fat": 0.00026,
-			"glycemic index": 0,
+			"glycemic index": 60,
 			"protein": 0.0257,
 			"kcal": 0.58077
 		},
@@ -257,16 +275,25 @@
 			"name": "Rice",
 			"carbohydrate": 0.7934000000000001,
 			"saturated fat": 0.00158,
-			"glycemic index": 0,
+			"glycemic index": 58,
 			"protein": 0.0661,
 			"kcal": 3.59934
+		},
+		{
+			"fiber": 0.02,
+			"name": "Rice wine",
+			"carbohydrate": 0.03,
+			"saturated fat": 0.0,
+			"glycemic index": 0,
+			"protein": 0.0087,
+			"kcal": 0.43067
 		},
 		{
 			"fiber": 0.008,
 			"name": "Soy sauce",
 			"carbohydrate": 0.055700000000000006,
 			"saturated fat": 0.00010999999999999999,
-			"glycemic index": 0,
+			"glycemic index": 25,
 			"protein": 0.1051,
 			"kcal": 0.59989
 		},
@@ -275,16 +302,25 @@
 			"name": "Spinach",
 			"carbohydrate": 0.0363,
 			"saturated fat": 0.00063,
-			"glycemic index": 0,
+			"glycemic index": 8,
 			"protein": 0.0286,
 			"kcal": 0.23183
+		},
+		{
+			"fiber": 0.03,
+			"name": "Spring onion",
+			"carbohydrate": 0.0763,
+			"saturated fat": 0.00023,
+			"glycemic index": 7,
+			"protein": 0.02,
+			"kcal": 0.32083
 		},
 		{
 			"fiber": 0.0,
 			"name": "Sugar",
 			"carbohydrate": 0.9998,
 			"saturated fat": 0.0,
-			"glycemic index": 0,
+			"glycemic index": 68,
 			"protein": 0.0,
 			"kcal": 3.8694100000000002
 		},
@@ -302,9 +338,18 @@
 			"name": "Tomato",
 			"carbohydrate": 0.0318,
 			"saturated fat": 0.00025,
-			"glycemic index": 0,
+			"glycemic index": 8,
 			"protein": 0.0116,
 			"kcal": 0.16013000000000002
+		},
+		{
+			"fiber": 0.009,
+			"name": "Tomato paste",
+			"carbohydrate": 0.2318,
+			"saturated fat": 0.175,
+			"glycemic index": 11,
+			"protein": 0.0416,
+			"kcal": 1.04
 		}
 	],
 	"courses": [
