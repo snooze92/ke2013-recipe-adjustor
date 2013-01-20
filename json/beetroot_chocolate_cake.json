@@ -5,7 +5,7 @@
 	"cuisine": "Irish",
 	"ingredients": [
 		{
-			"name": "Plain flour",
+			"name": "Flour",
 			"quantity": 135.0
 		},
 		{
@@ -25,7 +25,7 @@
 			"quantity": 9.0
 		},
 		{
-			"name": "Caster sugar",
+			"name": "Sugar",
 			"quantity": 200.0
 		},
 		{
@@ -34,7 +34,7 @@
 		},
 		{
 			"name": "Butter",
-			"quantity": 200.0,
+			"quantity": 200.0
 		}
 	]
 }

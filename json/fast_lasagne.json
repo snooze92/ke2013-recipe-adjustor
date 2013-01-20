@@ -9,11 +9,11 @@
 			"quantity": 8.0
 		},
 		{
-			"name": "Pork sausage",
+			"name": "Pork",
 			"quantity": 450.0
 		},
 		{
-			"name": "Chilli pepper",
+			"name": "Chili pepper",
 			"quantity": 4.5
 		},
 		{
@@ -21,7 +21,7 @@
 			"quantity": 8.0
 		},
 		{
-			"name": "Button mushrooms",
+			"name": "Edible mushroom",
 			"quantity": 150.0
 		},
 		{
@@ -49,8 +49,8 @@
 			"quantity": 75.0
 		},
 		{
-			"name": "Cheddar",
-			"quantity": 50.0
+			"name": "Mozzarella",
+			"quantity": 200.0
 		}
 	]
 }

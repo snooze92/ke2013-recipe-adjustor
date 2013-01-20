@@ -17,15 +17,15 @@
 			"quantity": 700.0
 		},
 		{
-			"name": "Chilli pepper",
+			"name": "Chili pepper",
 			"quantity": 30.0
 		},
 		{
-			"name": "Parsely",
+			"name": "Parsley",
 			"quantity": 6.0
 		},
 		{
-			"name": "Cheddar",
+			"name": "Blue cheese",
 			"quantity": 200.0
 		},
 		{
@@ -33,12 +33,12 @@
 			"quantity": 280.0
 		},
 		{
-			"name": "Yukon Gold potato",
+			"name": "Potato",
 			"quantity": 380.0
 		},
 		{
-			"name": "Corn oil",
-			"quantity": 40.0,
+			"name": "Peanut oil",
+			"quantity": 40.0
 		}
 	]
 }

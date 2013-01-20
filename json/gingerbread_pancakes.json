@@ -5,7 +5,7 @@
 	"cuisine": "British",
 	"ingredients": [
 		{
-			"name": "Self-raising flour",
+			"name": "Flour",
 			"quantity": 225.0
 		},
 		{
@@ -25,10 +25,6 @@
 			"quantity": 1.0
 		},
 		{
-			"name": "Salt",
-			"quantity": 0.2
-		},
-		{
 			"name": "Milk",
 			"quantity": 300.0
 		},
@@ -41,7 +37,7 @@
 			"quantity": 24.0
 		},
 		{
-			"name": "Parma ham",
+			"name": "Ham",
 			"quantity": 90.0
 		},
 		{
