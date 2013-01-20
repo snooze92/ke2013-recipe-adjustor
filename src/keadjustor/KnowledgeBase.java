@@ -1,6 +1,7 @@
 package keadjustor;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -13,9 +14,17 @@ import org.json.simple.JSONArray;
 public enum KnowledgeBase {
 	INSTANCE();
 	
+	private static final String IngredientNameKey = "name";
+	private static final String IngredientGlycemicKey = "glycemic index";
+	private static final String IngredientCarbsKey = "carbohydrate";
+	private static final String IngredientFatsKey = "saturated fat";
+	private static final String IngredientProteinsKey = "protein";
+	private static final String IngredientFibersKey = "fiber";
+	private static final String IngredientCaloriesKey = "kcal";
+	
 	private Map<String, Ingredient> ingredients;
 	private Map<String, Course> courses;
-	private Map<String, Substitution> substitutions;
+	private SubstitutionsMap substitutions;
 	
 	private KnowledgeBase() {
 		clear();
@@ -24,7 +33,19 @@ public enum KnowledgeBase {
 	public void clear() {
 		ingredients = new HashMap<String, Ingredient>();
 		courses = new HashMap<String, Course>();
-		substitutions = new HashMap<String, Substitution>();
+		substitutions = new SubstitutionsMap();
+	}
+	
+	private static double getDouble(JSONObject jsonObj, String key) {
+		double d = 0;
+		
+		try {
+			d = (double) jsonObj.get(key);
+		} catch (ClassCastException ex) {
+			d = ((Long) jsonObj.get(key)).doubleValue();
+		}
+		
+		return d;
 	}
 	
 	public boolean loadFile(String filepath) {
@@ -40,15 +61,15 @@ public enum KnowledgeBase {
 			String name;
 			for (Object i : jsonArray) {
 				JSONObject jsonIngredient = (JSONObject) i;
-				name = (String) jsonIngredient.get("name");
+				name = (String) jsonIngredient.get(IngredientNameKey);
 				// Get properties and add..
-				ingredients.put(name, new Ingredient.Builder(name)
-										.glycemicIndex((double) jsonIngredient.get("gl"))
-										.fractionCarbs((double) jsonIngredient.get("carbs"))
-										.fractionFats((double) jsonIngredient.get("fats"))
-										.fractionProteins((double) jsonIngredient.get("proteins"))
-										.fractionFibers((double) jsonIngredient.get("fibers"))
-										.calories((double) jsonIngredient.get("calories"))
+				ingredients.put(name.toLowerCase(), (new Ingredient.Builder(name))
+										.glycemicIndex(getDouble(jsonIngredient, IngredientGlycemicKey))
+										.fractionCarbs(getDouble(jsonIngredient, IngredientCarbsKey))
+										.fractionFats(getDouble(jsonIngredient, IngredientFatsKey))
+										.fractionProteins(getDouble(jsonIngredient, IngredientProteinsKey))
+										.fractionFibers(getDouble(jsonIngredient, IngredientFibersKey))
+										.calories(getDouble(jsonIngredient, IngredientCaloriesKey))
 										.build());
 			}
 			
@@ -74,7 +95,7 @@ public enum KnowledgeBase {
 				interval = (JSONArray) jsonCourse.get("calories");
 				courseProperties.calories((double) interval.get(0), (double) interval.get(1));
 				// Add..
-				courses.put(name, courseProperties.build());
+				courses.put(name.toLowerCase(), courseProperties.build());
 			}
 			
 			loaded = true;
@@ -85,35 +106,43 @@ public enum KnowledgeBase {
 			for (Object substitution : jsonArray) {
 				JSONObject jsonSubstitution = (JSONObject) substitution;
 				name = (String) jsonSubstitution.get("with");
-				if ((substitute = ingredients.get(name)) == null) {
+				if ((substitute = getIngredient(name)) == null) {
 					System.out.println(String.format("Fatal: The ingredient '%s' is not part of the Knowledge Base.", name));
 					loaded = false;
 				}
 				name = (String) jsonSubstitution.get("replace");
-				if ((original = ingredients.get(name)) == null) {
+				if ((original = getIngredient(name)) == null) {
 					System.out.println(String.format("Fatal: The ingredient '%s' is not part of the Knowledge Base.", name));
 					loaded = false;
 				}
-				substitutions.put(name, new Substitution(original, substitute, (double) jsonSubstitution.get("scale")));
+				substitutions.put(name.toLowerCase(), new Substitution(original, substitute, (double) jsonSubstitution.get("scale")));
 			}
 		} catch (FileNotFoundException ex) {
 			System.out.println(String.format("File not found (%s)", ex.getMessage()));
+			ex.printStackTrace();
 		} catch (IOException ex) {
 			System.out.println(String.format("Input error (%s)", ex.getMessage()));
+			ex.printStackTrace();
 		} catch (ParseException ex) {
 			System.out.println(String.format("Parse error (%s)", ex.getMessage()));
+			ex.printStackTrace();
 		} catch (Exception ex) {
 			System.out.println(String.format("Error (%s)", ex.getMessage()));
+			ex.printStackTrace();
 		}
 		return loaded;
 	}
 	
 	public Ingredient getIngredient(String name) {
-		return ingredients.get(name);
+		return ingredients.get(name.toLowerCase());
 	}
 	
 	public Course getCourse(String name) {
-		return courses.get(name);
+		return courses.get(name.toLowerCase());
+	}
+	
+	public List<Substitution> getSubstitutions(String originalIngredientName) {
+		return substitutions.get(originalIngredientName.toLowerCase());
 	}
 	
 	@Override
