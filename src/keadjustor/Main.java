@@ -15,9 +15,8 @@ public class Main {
 				if (recipe.isLoaded()) {
 					while(true) {						
 						HasIngredient ingredient = null;
-						System.out.println(String.format("cal=%s, carbs=%s, fats=%s, fibers=%s, gl=%s, proteins=%s", 
-								recipe.checkCalories(),
-								recipe.checkCarbs(),
+						System.out.println(String.format("cal=%s, fats=%s, fibers=%s, gl=%s, proteins=%s", 
+								recipe.checkCalories(),								
 								recipe.checkFats(),
 								recipe.checkFibers(),
 								recipe.checkGlycemicLoad(),

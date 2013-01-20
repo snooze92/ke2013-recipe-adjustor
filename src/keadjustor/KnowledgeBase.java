@@ -84,8 +84,8 @@ public enum KnowledgeBase {
 				courseProperties = new Course.Builder(name);
 				interval = (JSONArray) jsonCourse.get("gl");
 				courseProperties.glycemicLoad((double) interval.get(0), (double) interval.get(1));
-				interval = (JSONArray) jsonCourse.get("carbs");
-				courseProperties.carbs((double) interval.get(0), (double) interval.get(1));
+				//interval = (JSONArray) jsonCourse.get("carbs");
+				//courseProperties.carbs((double) interval.get(0), (double) interval.get(1));
 				interval = (JSONArray) jsonCourse.get("fats");
 				courseProperties.fats((double) interval.get(0), (double) interval.get(1));
 				interval = (JSONArray) jsonCourse.get("proteins");
