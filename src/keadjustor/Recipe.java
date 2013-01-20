@@ -51,7 +51,7 @@ public class Recipe {
 					else {
 						// Copy to keep the knowledge base reference clean
 						double quantity = (double) jsonIngredient.get("quantity");
-						ingredients.add(new HasIngredient(quantity, ingredient));
+						ingredients.add(new HasIngredient(this, quantity, ingredient));
 					}
 				}
 			}
@@ -142,9 +142,18 @@ public class Recipe {
 		return course.checkCalories(getCalories());
 	}
 	
+	public int getServings() {
+		return servings;
+	}
+	
 	@Override
 	public String toString() {
-		return String.format("Recipe: %s for %d (%s)", name, servings, course);
+		StringBuilder sb = new StringBuilder();
+		sb.append(String.format("Recipe: %s for %d (%s)\n", name, servings, course));
+		for(HasIngredient hi : getIngredients()) {
+			sb.append(hi + "\n");
+		}
+		return sb.toString();
 	}
 }
 
