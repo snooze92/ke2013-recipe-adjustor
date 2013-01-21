@@ -19,10 +19,10 @@ public class Interval {
 	// < 0 if val is too small
 	// = 0 if ok
 	// > 0 if val is too big
-	public int check(double val) {
-		if (val < min) return -1;
-		if (val > max) return 1;
-		return 0;
+	public double check(double val) {
+		if (val < min) return min - val;
+		if (val > max) return val - max;
+		return 0.0;
 	}
 	
 	@Override

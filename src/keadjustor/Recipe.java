@@ -9,6 +9,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import static ch.lambdaj.Lambda.*;
 
 public class Recipe {
 	private String name;
@@ -80,68 +81,46 @@ public class Recipe {
 	
 	// Sums
 	public double getGlycemicLoad() {
-		double sum = 0;
-		for(HasIngredient i : ingredients) {
-			sum += i.getGlycemicLoad();
-		}
-		return (sum / servings);
-	}
-	public double getCarbs() {
-		double sum = 0;
-		for(HasIngredient i : ingredients) {
-			sum += i.getFractionCarbs();
-		}
-		return (sum / servings);
+		return sum(ingredients, on(HasIngredient.class).getGlycemicLoad());		
 	}
 	public double getFats() {
-		double sum = 0;
-		for(HasIngredient i : ingredients) {
-			sum += i.getFractionFats();
-		}
-		return (sum / servings);
+		return sum(ingredients, on(HasIngredient.class).getFats());
 	}
 	public double getProteins() {
-		double sum = 0;
-		for(HasIngredient i : ingredients) {
-			sum += i.getFractionProteins();
-		}
-		return (sum / servings);
+		return sum(ingredients, on(HasIngredient.class).getProteins());
 	}
 	public double getFibers() {
-		double sum = 0;
-		for(HasIngredient i : ingredients) {
-			sum += i.getFractionFibers();
-		}
-		return (sum / servings);
+		return sum(ingredients, on(HasIngredient.class).getFibers());
 	}
 	public double getCalories() {
-		double sum = 0;
-		for(HasIngredient i : ingredients) {
-			sum += i.getCalories();
-		}
-		return (sum / servings);
+		return sum(ingredients, on(HasIngredient.class).getCalories());
+	}
+	
+	public double evaluate() {
+		return 
+				Math.abs(course.checkGlycemicLoad(getGlycemicLoad())) +
+				Math.abs(course.checkFats(getFats())) +
+				Math.abs(course.checkProteins(getProteins())) +
+				Math.abs(course.checkFibers(getFibers())) +
+				Math.abs(course.checkCalories(getCalories()));
 	}
 	
 	// Checks
-	public int checkGlycemicLoad() {
+	public double checkGlycemicLoad() {
 		return course.checkGlycemicLoad(getGlycemicLoad());
 	}
-	public int checkCarbs() {
-		return course.checkCarbs(getCarbs());
-	}
-	public int checkFats() {
+	public double checkFats() {
 		return course.checkFats(getFats());
 	}
-	public int checkProteins() {
+	public double checkProteins() {
 		return course.checkProteins(getProteins());
 	}
-	public int checkFibers() {
+	public double checkFibers() {
 		return course.checkFibers(getFibers());
 	}
-	public int checkCalories() {
+	public double checkCalories() {
 		return course.checkCalories(getCalories());
-	}
-	
+	}	
 	public int getServings() {
 		return servings;
 	}

@@ -70,22 +70,22 @@ public class Course {
 	}
 	
 	// Checks
-	public int checkGlycemicLoad(double val) {
+	public double checkGlycemicLoad(double val) {
 		return glycemicLoad.check(val);
 	}
-	public int checkCarbs(double val) {
+	public double checkCarbs(double val) {
 		return carbs.check(val);
 	}
-	public int checkFats(double val) {
+	public double checkFats(double val) {
 		return fats.check(val);
 	}
-	public int checkProteins(double val) {
+	public double checkProteins(double val) {
 		return proteins.check(val);
 	}
-	public int checkFibers(double val) {
+	public double checkFibers(double val) {
 		return fibers.check(val);
 	}
-	public int checkCalories(double val) {
+	public double checkCalories(double val) {
 		return calories.check(val);
 	}
 

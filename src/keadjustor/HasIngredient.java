@@ -25,20 +25,17 @@ public class HasIngredient {
 	public double getGlycemicLoad() {
 		return ingredient.getGlycemicIndex() * ingredient.getFractionCarbs() * (quantity / recipe.getServings()) / 100;
 	}
-	public double getFractionCarbs() {
-		return quantity * ingredient.getFractionCarbs() / recipe.getServings();
+	public double getFats() {
+		return ingredient.getFractionFats() * (quantity / recipe.getServings());
 	}
-	public double getFractionFats() {
-		return quantity * ingredient.getFractionFats() / recipe.getServings();
+	public double getProteins() {
+		return ingredient.getFractionProteins() * (quantity / recipe.getServings());
 	}
-	public double getFractionProteins() {
-		return quantity * ingredient.getFractionProteins() / recipe.getServings();
-	}
-	public double getFractionFibers() {
-		return quantity * ingredient.getFractionFibers() / recipe.getServings();
+	public double getFibers() {
+		return ingredient.getFractionFibers() * (quantity / recipe.getServings());
 	}
 	public double getCalories() {
-		return quantity * ingredient.getCalories() / recipe.getServings();
+		return ingredient.getCalories() * (quantity / recipe.getServings());
 	}
 	
 	// Setters
@@ -53,6 +50,6 @@ public class HasIngredient {
 	}
 	
 	public String toString() {
-		return String.format("%s with qty %f", getIngredient().getName(), getQuantity());
+		return String.format("%s has qty=%.2f", getIngredient().getName(), this.quantity);
 	}
 }

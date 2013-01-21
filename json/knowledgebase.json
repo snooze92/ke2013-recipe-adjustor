@@ -359,7 +359,7 @@
 			"fats": [ 0.0, 4.0 ],
 			"proteins": [ 0.0, 1000.0 ],
 			"fibers": [ 0.0, 6.0 ],
-			"calories": [ 0.0, 275.0 ]
+			"calories": [ 275.0, 550.0 ]
 		},
 		{
 			"name": "light meal",
@@ -367,7 +367,7 @@
 			"fats": [ 0.0, 7.0 ],
 			"proteins": [ 0.0, 1000.0 ],
 			"fibers": [ 0.0, 10.0 ],
-			"calories": [ 0.0, 410.0 ]
+			"calories": [ 410.0, 650.0 ]
 		},
 		{
 			"name": "starter",
@@ -375,15 +375,15 @@
 			"fats": [ 0.0, 3.0 ],
 			"proteins": [ 0.0, 1000.0 ],
 			"fibers": [ 0.0, 5.0 ],
-			"calories": [ 0.0, 100.0 ]
+			"calories": [ 100.0, 350.0 ]
 		},
 		{
 			"name": "main course",
 			"gl": [ 0.0, 20.0 ],
 			"fats": [ 0.0, 6.0 ],
 			"proteins": [ 0.0, 1000.0 ],
-			"fibers": [ 0.0, 12.0 ],
-			"calories": [ 0.0, 240.0 ]
+			"fibers": [ 3.0, 12.0 ],
+			"calories": [ 240.0, 500.0 ]
 		},
 		{
 			"name": "dessert",
@@ -391,7 +391,7 @@
 			"fats": [ 0.0, 6.0 ],
 			"proteins": [ 0.0, 1000.0 ],
 			"fibers": [ 0.0, 5.0 ],
-			"calories": [ 0.0, 90.0 ]
+			"calories": [ 90.0, 500.0 ]
 		}
 	],
 	"substitutions": [
