@@ -1,5 +1,6 @@
 package keadjustor;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,6 +16,7 @@ public enum KnowledgeBase {
 	INSTANCE();
 	
 	private static final String IngredientNameKey = "name";
+	private static final String IngredientTypeKey = "type";
 	private static final String IngredientGlycemicKey = "glycemic index";
 	private static final String IngredientCarbsKey = "carbohydrate";
 	private static final String IngredientFatsKey = "saturated fat";
@@ -24,7 +26,7 @@ public enum KnowledgeBase {
 	
 	private Map<String, Ingredient> ingredients;
 	private Map<String, Course> courses;
-	private SubstitutionsMap substitutions;
+	private SubstitutionsMap specificSubstitutions;
 	
 	private KnowledgeBase() {
 		clear();
@@ -33,7 +35,7 @@ public enum KnowledgeBase {
 	public void clear() {
 		ingredients = new HashMap<String, Ingredient>();
 		courses = new HashMap<String, Course>();
-		substitutions = new SubstitutionsMap();
+		specificSubstitutions = new SubstitutionsMap();
 	}
 	
 	private static double getDouble(JSONObject jsonObj, String key) {
@@ -62,15 +64,17 @@ public enum KnowledgeBase {
 			for (Object i : jsonArray) {
 				JSONObject jsonIngredient = (JSONObject) i;
 				name = (String) jsonIngredient.get(IngredientNameKey);
+				Ingredient newIngredient = (new Ingredient.Builder(name))
+						.type((String) jsonIngredient.get(IngredientTypeKey))
+						.glycemicIndex(getDouble(jsonIngredient, IngredientGlycemicKey))
+						.fractionCarbs(getDouble(jsonIngredient, IngredientCarbsKey))
+						.fractionFats(getDouble(jsonIngredient, IngredientFatsKey))
+						.fractionProteins(getDouble(jsonIngredient, IngredientProteinsKey))
+						.fractionFibers(getDouble(jsonIngredient, IngredientFibersKey))
+						.calories(getDouble(jsonIngredient, IngredientCaloriesKey))
+						.build();
 				// Get properties and add..
-				ingredients.put(name.toLowerCase(), (new Ingredient.Builder(name))
-										.glycemicIndex(getDouble(jsonIngredient, IngredientGlycemicKey))
-										.fractionCarbs(getDouble(jsonIngredient, IngredientCarbsKey))
-										.fractionFats(getDouble(jsonIngredient, IngredientFatsKey))
-										.fractionProteins(getDouble(jsonIngredient, IngredientProteinsKey))
-										.fractionFibers(getDouble(jsonIngredient, IngredientFibersKey))
-										.calories(getDouble(jsonIngredient, IngredientCaloriesKey))
-										.build());
+				ingredients.put(name.toLowerCase(), newIngredient);
 			}
 			
 			// Load courses
@@ -115,7 +119,7 @@ public enum KnowledgeBase {
 					System.out.println(String.format("Fatal: The ingredient '%s' is not part of the Knowledge Base.", name));
 					loaded = false;
 				}
-				substitutions.put(name.toLowerCase(), new Substitution(original, substitute, (double) jsonSubstitution.get("scale")));
+				specificSubstitutions.put(name.toLowerCase(), new Substitution(original, substitute, (double) jsonSubstitution.get("scale")));
 			}
 		} catch (FileNotFoundException ex) {
 			System.out.println(String.format("File not found (%s)", ex.getMessage()));
@@ -141,13 +145,28 @@ public enum KnowledgeBase {
 		return courses.get(name.toLowerCase());
 	}
 	
-	public List<Substitution> getSubstitutions(String originalIngredientName) {
-		return substitutions.get(originalIngredientName.toLowerCase());
+	public List<Substitution> getSpecificSubstitutions(Ingredient original) {
+		List<Substitution> list = specificSubstitutions.get(original.getName().toLowerCase());
+		return (list == null) ? new ArrayList<Substitution>() : list;
+	}
+	
+	// TODO: a hash map should be built once for all instead of building this every time
+	public List<Substitution> getTypeSubstitutions(Ingredient original) {
+		List<Substitution> result = new ArrayList<Substitution>();
+		
+		if (original.getType().length() > 0) {
+			for (Ingredient substitute : ingredients.values()) {
+				if (substitute.getType().equals(original.getType())) {
+					result.add(new Substitution(original, substitute, 1.0));
+				}
+			}
+		}
+		return result;
 	}
 	
 	@Override
 	public String toString() {
-		return String.format("Knowledge Base: %d ingredients, %d courses, %d substitutions",
-				ingredients.size(), courses.size(), substitutions.size());
+		return String.format("Knowledge Base: %d ingredients, %d courses, %d specific substitutions",
+				ingredients.size(), courses.size(), specificSubstitutions.size());
 	}
 }

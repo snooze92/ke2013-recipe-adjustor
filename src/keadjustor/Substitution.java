@@ -1,6 +1,6 @@
 package keadjustor;
 
-public class Substitution {
+public class Substitution implements FixAction {
 	private Ingredient original;
 	private Ingredient substitute;
 	private double scale;
@@ -11,9 +11,9 @@ public class Substitution {
 		this.scale = scale;
 	}
 	
+	@Override
 	public boolean modifyRecipe(Recipe recipe) {
-		// Note: implementing equals and gethash for HasIngredient would
-		// allow to use a more performant datastructure (e.g. TreeSet)
+		// TODO: Could be improved
 		for (HasIngredient i : recipe.getIngredients()) {
 			if (i.getIngredient() == original) {
 				i.setIngredient(substitute);
@@ -22,5 +22,11 @@ public class Substitution {
 			}
 		}
 		return false;
+	}
+	
+	@Override
+	public String toString() {
+		return String.format("Replacing %s with %s (scale: %.2f)",
+				original.getName(), substitute.getName(), scale);
 	}
 }

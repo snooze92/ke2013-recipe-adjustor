@@ -3,6 +3,7 @@ package keadjustor;
 public class Ingredient {
 	// Constant properties
 	private final String name;
+	private final String type;
 	private final double glycemicIndex;
 	private final double fractionCarbs;
 	private final double fractionFats;
@@ -13,6 +14,7 @@ public class Ingredient {
 	// Builder
 	public static class Builder {
 		private final String name;
+		private String type;
 		private double glycemicIndex;
 		private double fractionCarbs;
 		private double fractionFats;
@@ -24,6 +26,10 @@ public class Ingredient {
 			this.name = name;
 		}
 		
+		public Builder type(String val) {
+			type = val;
+			return this;
+		}
 		public Builder glycemicIndex(double val) {
 			glycemicIndex = val;
 			return this;
@@ -57,6 +63,7 @@ public class Ingredient {
 	// Private constructor
 	private Ingredient(Builder builder) {
 		name = builder.name;
+		type = builder.type;
 		glycemicIndex = builder.glycemicIndex;
 		fractionCarbs = builder.fractionCarbs;
 		fractionFats = builder.fractionFats;
@@ -68,6 +75,9 @@ public class Ingredient {
 	// Getters
 	public String getName() {
 		return name;
+	}
+	public String getType() {
+		return type;
 	}
 	public double getGlycemicIndex() {
 		return glycemicIndex;

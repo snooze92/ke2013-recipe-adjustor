@@ -20,6 +20,19 @@ public class Recipe {
 	
 	private List<HasIngredient> ingredients;
 	
+	// Copy constructor
+	public Recipe(Recipe original) {
+		this.name = original.name;
+		this.servings = original.servings;
+		this.course = original.course;
+		this.loaded = original.loaded;
+		
+		this.ingredients = new ArrayList<HasIngredient>();
+		for (HasIngredient ingredient : original.ingredients) {
+			this.ingredients.add(new HasIngredient(this, ingredient.getQuantity(), ingredient.getIngredient()));
+		}
+	}
+	
 	// Construction from JSON file
 	public Recipe(String filepath) {
 		this.loaded = true;
@@ -123,6 +136,15 @@ public class Recipe {
 	}	
 	public int getServings() {
 		return servings;
+	}
+	
+	public List<QuantityAdjustment> getPossibleAdjustments() {
+		List<QuantityAdjustment> result = new ArrayList<QuantityAdjustment>();
+		for (HasIngredient i : ingredients) {
+			result.add(new QuantityAdjustment(i.getIngredient(), 1.0 - QuantityAdjustment.adjustmentFactor));
+			result.add(new QuantityAdjustment(i.getIngredient(), 1.0 + QuantityAdjustment.adjustmentFactor));
+		}
+		return result;
 	}
 	
 	@Override
