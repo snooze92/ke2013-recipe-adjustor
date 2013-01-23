@@ -3,7 +3,7 @@
 		{
 			"fiber": 0.0,
 			"name": "Bacon",
-			"type": "",
+			"type": "pork cut",
 			"carbohydrate": 0.006600000000000001,
 			"saturated fat": 0.14993,
 			"glycemic index": 0,
@@ -13,7 +13,7 @@
 		{
 			"fiber": 0.024,
 			"name": "Baguette",
-			"type": "",
+			"type": "bread",
 			"carbohydrate": 0.5644,
 			"saturated fat": 0.0049700000000000005,
 			"glycemic index": 95,
@@ -43,12 +43,22 @@
 		{
 			"fiber": 0.0,
 			"name": "Blue cheese",
-			"type": "",
+			"type": "cheese",
 			"carbohydrate": 0.0234,
 			"saturated fat": 0.18669000000000002,
 			"glycemic index": 0,
 			"protein": 0.214,
 			"kcal": 3.5300300000000004
+		},
+		{
+			"fiber": 0.02,
+			"name": "Brown rice, cooked",
+			"type": "rice",
+			"carbohydrate": 0.23,
+			"saturated fat": 0.00057,
+			"glycemic index": 54,
+			"protein": 0.03,
+			"kcal": 1.11
 		},
 		{
 			"fiber": 0.0,
@@ -71,6 +81,16 @@
 			"kcal": 7.167610000000001
 		},
 		{
+			"fiber": 0.0,
+			"name": "Cheddar",
+			"type": "cheese",
+			"carbohydrate": 0.01,
+			"saturated fat": 0.21,
+			"glycemic index": 0,
+			"protein": 0.25,
+			"kcal": 4.03
+		},
+		{
 			"fiber": 0.015,
 			"name": "Chili pepper",
 			"type": "",
@@ -89,6 +109,16 @@
 			"glycemic index": 45,
 			"protein": 0.0765,
 			"kcal": 5.35121
+		},
+		{
+			"fiber": 0.0,
+			"name": "Cider vinegar",
+			"type": "",
+			"carbohydrate": 0.0930,
+			"saturated fat": 0.0,
+			"glycemic index": 0,
+			"protein": 0.0,
+			"kcal": 0.21
 		},
 		{
 			"fiber": 0.531,
@@ -123,12 +153,22 @@
 		{
 			"fiber": 0.0,
 			"name": "Creme fraiche",
-			"type": "",
+			"type": "dairy cream",
 			"carbohydrate": 0.03,
 			"saturated fat": 0.23,
 			"glycemic index": 0,
 			"protein": 0.03,
 			"kcal": 3.15
+		},
+		{
+			"fiber": 0.0,
+			"name": "Creme fraiche, reduced fat",
+			"type": "dairy cream",
+			"carbohydrate": 0.05,
+			"saturated fat": 0.11,
+			"glycemic index": 0,
+			"protein": 0.03,
+			"kcal": 1.75
 		},
 		{
 			"fiber": 0.01,
@@ -183,7 +223,7 @@
 		{
 			"fiber": 0.0,
 			"name": "Ground beef",
-			"type": "",
+			"type": "ground meat",
 			"carbohydrate": 0.0,
 			"saturated fat": 0.11289,
 			"glycemic index": 0,
@@ -192,13 +232,33 @@
 		},
 		{
 			"fiber": 0.0,
+			"name": "Ground pork",
+			"type": "ground meat",
+			"carbohydrate": 0.0,
+			"saturated fat": 0.25082,
+			"glycemic index": 0,
+			"protein": 0.0582,
+			"kcal": 6.651370000000001
+		},
+		{
+			"fiber": 0.0,
 			"name": "Ham",
-			"type": "",
+			"type": "pork cut",
 			"carbohydrate": 0.04,
 			"saturated fat": 0.01489,
 			"glycemic index": 0,
 			"protein": 0.1405,
 			"kcal": 1.1711
+		},
+		{
+			"fiber": 0.0,
+			"name": "Hard goat cheese",
+			"type": "cheese",
+			"carbohydrate": 0.02,
+			"saturated fat": 0.25,
+			"glycemic index": 0,
+			"protein": 0.31,
+			"kcal": 4.52
 		},
 		{
 			"fiber": 0.032,
@@ -301,16 +361,6 @@
 			"kcal": 8.84061
 		},
 		{
-			"fiber": 0.0,
-			"name": "Pork",
-			"type": "",
-			"carbohydrate": 0.0,
-			"saturated fat": 0.25082,
-			"glycemic index": 0,
-			"protein": 0.0582,
-			"kcal": 6.651370000000001
-		},
-		{
 			"fiber": 0.025,
 			"name": "Potato",
 			"type": "",
@@ -321,14 +371,14 @@
 			"kcal": 0.58077
 		},
 		{
-			"fiber": 0.013999999999999999,
-			"name": "Rice",
-			"type": "",
-			"carbohydrate": 0.7934000000000001,
-			"saturated fat": 0.00158,
+			"fiber": 0.00300,
+			"name": "White rice, cooked",
+			"type": "rice",
+			"carbohydrate": 0.29,
+			"saturated fat": 0.00057,
 			"glycemic index": 58,
-			"protein": 0.0661,
-			"kcal": 3.59934
+			"protein": 0.02,
+			"kcal": 1.30
 		},
 		{
 			"fiber": 0.02,
@@ -339,6 +389,36 @@
 			"glycemic index": 0,
 			"protein": 0.0087,
 			"kcal": 0.43067
+		},
+		{
+			"fiber": 0.08,
+			"name": "Rye bread",
+			"type": "bread",
+			"carbohydrate": 0.47,
+			"saturated fat": 0.00561,
+			"glycemic index": 48,
+			"protein": 0.09,
+			"kcal": 2.48
+		},
+		{
+			"fiber": 0.0,
+			"name": "Soft goat cheese",
+			"type": "cheese",
+			"carbohydrate": 0.00890,
+			"saturated fat": 0.15,
+			"glycemic index": 0,
+			"protein": 0.19,
+			"kcal": 2.68
+		},
+		{
+			"fiber": 0.0,
+			"name": "Sour cream",
+			"type": "dairy cream",
+			"carbohydrate": 0.07,
+			"saturated fat": 0.07,
+			"glycemic index": 0,
+			"protein": 0.04,
+			"kcal": 1.36
 		},
 		{
 			"fiber": 0.008,
@@ -358,7 +438,7 @@
 			"saturated fat": 0.00155,
 			"glycemic index": 67,
 			"protein": 0.06,
-			"kcal": 1.27
+			"kcal": 3.57
 		},
 		{
 			"fiber": 0.022000000000000002,
@@ -421,6 +501,16 @@
 			"kcal": 1.04
 		},
 		{
+			"fiber": 0.024,
+			"name": "White hamburger bun",
+			"type": "bread",
+			"carbohydrate": 0.52,
+			"saturated fat": 0.01,
+			"glycemic index": 80,
+			"protein": 0.12,
+			"kcal": 2.82
+		},
+		{
 			"fiber": 0.11,
 			"name": "Whole-grain wheat flour",
 			"type": "flour",
@@ -429,6 +519,16 @@
 			"glycemic index": 65,
 			"protein": 0.13,
 			"kcal": 3.40
+		},
+		{
+			"fiber": 0.028,
+			"name": "Whole-wheat hamburger bun",
+			"type": "bread",
+			"carbohydrate": 0.41,
+			"saturated fat": 0.0,
+			"glycemic index": 71,
+			"protein": 0.141,
+			"kcal": 2.76
 		}
 	],
 	"courses": [
@@ -475,9 +575,9 @@
 	],
 	"substitutions": [
 		{
-			"replace": "tomato",
-			"with": "onion",
-			"scale": 1.4
+			"replace": "Rice wine",
+			"with": "Cider vinegar",
+			"scale": 0.5
 		}
 	]
 }
