@@ -7,13 +7,13 @@ public class Main {
 		}
 		else {
 			if (KnowledgeBase.INSTANCE.loadFile(args[0])) {
-				System.out.println(KnowledgeBase.INSTANCE);	
+				System.out.println(String.format("[LOADED] %s", KnowledgeBase.INSTANCE));	
 				
 				Recipe originalRecipe = new Recipe(args[1]);
 				
 				if (originalRecipe.isLoaded()) {
 					// Everything was well loaded
-					System.out.println(String.format("ORIGINAL: %s", originalRecipe));
+					System.out.println(String.format("\n[ORIGINAL] %s", originalRecipe));
 					
 					Recipe newRecipe, bestRecipe, currentRecipe = originalRecipe;
 					double newEval, bestEval, currentEval = currentRecipe.evaluate();
@@ -23,11 +23,9 @@ public class Main {
 						bestRecipe = currentRecipe;
 						bestEval = currentEval;
 						bestFix = null;
-						
-						// TODO: This code is three times the same, could be reduced!
-						// For all ingredients
+
+						// Try specific substitutions
 						for (HasIngredient i : currentRecipe.getIngredients()) {
-							// Try specific substitutions
 							for (FixAction fix : KnowledgeBase.INSTANCE.getSpecificSubstitutions(i.getIngredient())) {
 								newRecipe = new Recipe(currentRecipe);
 								fix.modifyRecipe(newRecipe);
@@ -40,26 +38,30 @@ public class Main {
 									bestFix = fix;
 								}
 							}
-							if (bestRecipe != currentRecipe) { break; } // test...
-							
+						}
+						
+						if (bestFix == null) {
 							// Try type substitutions
-							for (FixAction fix : KnowledgeBase.INSTANCE.getTypeSubstitutions(i.getIngredient())) {
-								newRecipe = new Recipe(bestRecipe);
-								fix.modifyRecipe(newRecipe);
-								newEval = newRecipe.evaluate();
-								
-								if (newEval < bestEval) {
-									// Best FixAction so far
-									bestEval = newEval;
-									bestRecipe = newRecipe;
-									bestFix = fix;
+							for (HasIngredient i : currentRecipe.getIngredients()) {
+								for (FixAction fix : KnowledgeBase.INSTANCE.getTypeSubstitutions(i.getIngredient())) {
+									newRecipe = new Recipe(currentRecipe);
+									fix.modifyRecipe(newRecipe);
+									newEval = newRecipe.evaluate();
+									
+									if (newEval < bestEval) {
+										// Best FixAction so far
+										bestEval = newEval;
+										bestRecipe = newRecipe;
+										bestFix = fix;
+									}
 								}
 							}
-							if (bestRecipe != currentRecipe) { break; } // test...
-							
+						}
+						
+						if (bestFix == null) {
 							// Try quantity adjustments
 							for (FixAction fix : currentRecipe.getPossibleAdjustments()) {
-								newRecipe = new Recipe(bestRecipe);
+								newRecipe = new Recipe(currentRecipe);
 								fix.modifyRecipe(newRecipe);
 								newEval = newRecipe.evaluate();
 								
@@ -74,19 +76,21 @@ public class Main {
 						
 						// Everything has been tried
 						if (bestFix == null) {
-							System.out.println("No more possible fix action.");
+							System.out.println("[LOG] No more possible fix action.");
 							break;
 						}
 						else {
 							// Keep best adjustment and reiterate
-							System.out.println(String.format("%s => eval from %.2f down to %.2f",
+							System.out.println(String.format("[LOG] %s => eval from %.2f down to %.2f",
 									bestFix, currentEval, bestEval));
 							currentRecipe = bestRecipe;
 							currentEval = bestEval;
+							
+							// System.out.println(String.format("\nNEW: %s", currentRecipe));
 						}
 					}
 					
-					System.out.println(String.format("\nADJUSTED: %s", currentRecipe));
+					System.out.println(String.format("\n[ADJUSTED] %s", currentRecipe));
 				}
 				else {
 					System.out.println("Error(s) while loading the Recipe.");
