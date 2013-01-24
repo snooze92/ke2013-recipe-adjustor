@@ -110,12 +110,22 @@ public class Recipe {
 	}
 	
 	public double evaluate() {
-		return 
-				Math.abs(course.checkGlycemicLoad(getGlycemicLoad())) +
-				Math.abs(course.checkFats(getFats())) +
-				Math.abs(course.checkProteins(getProteins())) +
-				Math.abs(course.checkFibers(getFibers())) +
-				Math.abs(course.checkCalories(getCalories()));
+		return evaluate(false);
+	}
+	public double evaluate(boolean print) {
+		double glError = Math.abs(course.checkGlycemicLoad(getGlycemicLoad()));
+		double fatsError = Math.abs(course.checkFats(getFats()));
+		double proteinsError = Math.abs(course.checkProteins(getProteins()));
+		double fibersError = Math.abs(course.checkFibers(getFibers()));
+		double caloriesError = Math.abs(course.checkCalories(getCalories()));
+		// TODO: Have static final at the top, with 5 smart weights
+		double error = glError + fatsError + proteinsError + fibersError + 0.1 * caloriesError;
+		
+		if (print) {
+			System.out.println(String.format("[LOG] Errors=%.2f (GL=%.2f; fats=%.2f; proteins=%.2f; fibers=%.2f; calories=%.2f)",
+					error, glError, fatsError, proteinsError, fibersError, caloriesError));
+		}
+		return error;
 	}
 	
 	// Checks

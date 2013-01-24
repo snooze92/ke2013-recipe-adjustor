@@ -16,7 +16,7 @@ public class Main {
 					System.out.println(String.format("\n[ORIGINAL] %s", originalRecipe));
 					
 					Recipe newRecipe, bestRecipe, currentRecipe = originalRecipe;
-					double newEval, bestEval, currentEval = currentRecipe.evaluate();
+					double newEval, bestEval, currentEval = currentRecipe.evaluate(true);
 					FixAction bestFix;
 					// Adjustment loop:
 					while(currentEval > 0.0) {
@@ -86,6 +86,8 @@ public class Main {
 							currentRecipe = bestRecipe;
 							currentEval = bestEval;
 							
+							// Quick coding: evaluate(true) prints the calculation
+							currentRecipe.evaluate(true);
 							// System.out.println(String.format("\nNEW: %s", currentRecipe));
 						}
 					}
