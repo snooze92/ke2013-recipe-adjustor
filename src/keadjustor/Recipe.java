@@ -125,7 +125,7 @@ public class Recipe {
 			System.out.println(String.format("[LOG] Errors=%.2f (GL=%.2f; fats=%.2f; proteins=%.2f; fibers=%.2f; calories=%.2f)",
 					error, glError, fatsError, proteinsError, fibersError, caloriesError));
 		}
-		return error;
+		return (glError == 0 && error < 20) ? 0 : error;
 	}
 	
 	// Checks

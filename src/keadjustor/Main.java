@@ -13,7 +13,7 @@ public class Main {
 				
 				if (originalRecipe.isLoaded()) {
 					// Everything was well loaded
-					System.out.println(String.format("\n[ORIGINAL] %s", originalRecipe));
+					System.out.println(String.format("\n[LOADED] %s", originalRecipe));
 					
 					Recipe newRecipe, bestRecipe, currentRecipe = originalRecipe;
 					double newEval, bestEval, currentEval = currentRecipe.evaluate(true);
@@ -92,7 +92,8 @@ public class Main {
 						}
 					}
 					
-					System.out.println(String.format("\n[ADJUSTED] %s", currentRecipe));
+					System.out.println(String.format("\n[ORIGINAL] %s", originalRecipe));
+					System.out.println(String.format("[ADJUSTED] %s", currentRecipe));
 				}
 				else {
 					System.out.println("Error(s) while loading the Recipe.");
