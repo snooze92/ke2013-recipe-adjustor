@@ -39,7 +39,6 @@ public class Main {
 					while((violation = currentRecipe.verify()) != null) {
 						if (i == 5000) break; // exit long loops 
 						i++;
-						System.out.println("[LOG] ---- PCM cycle:");
 						System.out.println("[LOG] Violation: " + violation);
 						System.out.println(String.format("[LOG] GL=%.2f, Calories=%.2f, Fats=%.2f, Proteins=%.2f, Fibers=%.2f",
 								currentRecipe.getGlycemicLoad(),
@@ -53,7 +52,6 @@ public class Main {
 						// select the best fixaction
 						FixAction bestFixAction = select_fix_action(currentRecipe, violation, fixActions);
 						System.out.println("[LOG] " + bestFixAction);
-						System.out.println("[LOG] ---- END PCM cycle:");
 						// modify recipe with best fixaction and continue						
 						bestFixAction.modify(currentRecipe);
 					}
