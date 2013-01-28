@@ -1,10 +1,8 @@
 package keadjustor;
 import static ch.lambdaj.Lambda.*;
 
-import java.security.acl.LastOwnerException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import keadjustor.constraints.MaximumCalories;
