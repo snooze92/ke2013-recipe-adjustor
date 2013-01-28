@@ -122,30 +122,51 @@ public class Recipe {
 	
 	public RecipeConstraint verify() {
 		for(RecipeConstraint constraint : course.getConstraints())
-		{
-			
-			
+		{	
+			if(constraint instanceof MaximumGlycemicLoad)
+			{
+				((MaximumGlycemicLoad) constraint).verify(getGlycemicLoad());							
+				if(constraint.isViolated())
+					return constraint;
+			}
+			if(constraint instanceof MinimumCalories)
+			{
+				((MinimumCalories) constraint).verify(getCalories());
+				if(constraint.isViolated())
+					return constraint;
+			}
+			if(constraint instanceof MaximumCalories)
+			{
+				((MaximumCalories) constraint).verify(getCalories());
+				if(constraint.isViolated())
+					return constraint;
+			}
 			if(constraint instanceof MinimumProtein)
+			{
 				((MinimumProtein) constraint).verify(getProteins());
+				if(constraint.isViolated())
+					return constraint;
+			}
 			if(constraint instanceof MaximumProtein)
+			{
 				((MaximumProtein) constraint).verify(getProteins());
+				if(constraint.isViolated())
+					return constraint;
+			}
 			
-			if(constraint instanceof MinimumFiber)
+			if(constraint instanceof MinimumFiber) 
+			{
 				((MinimumFiber) constraint).verify(getFibers());
+				if(constraint.isViolated())
+					return constraint;
+			}
 			
 			if(constraint instanceof MaximumSaturatedFat)
+			{
 				((MaximumSaturatedFat) constraint).verify(getFats());
-			
-			if(constraint instanceof MinimumCalories)
-				((MinimumCalories) constraint).verify(getCalories());
-			if(constraint instanceof MaximumCalories)
-				((MaximumCalories) constraint).verify(getCalories());
-			
-			if(constraint instanceof MaximumGlycemicLoad)
-				((MaximumGlycemicLoad) constraint).verify(getGlycemicLoad());
-							
-			if(constraint.isViolated())
-				return constraint;
+				if(constraint.isViolated())
+					return constraint;
+			}
 		}
 		return null;
 	}

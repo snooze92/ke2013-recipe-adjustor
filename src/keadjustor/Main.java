@@ -35,7 +35,10 @@ public class Main {
 					RecipeConstraint violation; 
 					
 					// while currentRecipe does not fire a violation
+					int i = 0;
 					while((violation = currentRecipe.verify()) != null) {
+						if (i == 1000) break; // exit long loops 
+						i++;
 						System.out.println("[LOG] ---- PCM cycle:");
 						System.out.println("[LOG] Violation: " + violation);
 						System.out.println(String.format("[LOG] GL=%.2f, Calories=%.2f, Fats=%.2f, Proteins=%.2f, Fibers=%.2f",
@@ -48,14 +51,11 @@ public class Main {
 						// get all possible fixactions 
 						ArrayList<FixAction> fixActions = critique(currentRecipe);
 						// select the best fixaction
-						FixAction bestFixAction = select(currentRecipe, violation, fixActions);
+						FixAction bestFixAction = select_fix_action(currentRecipe, violation, fixActions);
 						System.out.println("[LOG] " + bestFixAction);
 						System.out.println("[LOG] ---- END PCM cycle:");
-						// copy recipe and modify it with best fixaction
-						Recipe newRecipe = new Recipe(currentRecipe);
-						bestFixAction.modify(newRecipe);
-						// continue
-						currentRecipe = newRecipe;
+						// modify recipe with best fixaction and continue						
+						bestFixAction.modify(currentRecipe);
 					}
 					
 					System.out.println(String.format("\n[ORIGINAL] %s", originalRecipe));
@@ -87,7 +87,7 @@ public class Main {
 		return fixActions;
 	}
 	
-	public static FixAction select(Recipe recipe, RecipeConstraint violation, ArrayList<FixAction> fixActions)
+	public static FixAction select_fix_action(Recipe recipe, RecipeConstraint violation, ArrayList<FixAction> fixActions)
 	{
 		Map<Recipe, FixAction> recipeFixes = new HashMap<Recipe, FixAction>();
 		for(FixAction fa : fixActions) {
