@@ -168,7 +168,7 @@ public class Recipe {
 				if(mostViolated == null)
 					mostViolated = constraint;
 				
-				perc = curValue / currentConstraint.getValue();
+				perc = Math.abs(1 - curValue / currentConstraint.getValue());
 				//System.out.println(constraint + " " + perc);
 				if(perc > highest)
 				{
