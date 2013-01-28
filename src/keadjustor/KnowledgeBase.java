@@ -7,6 +7,16 @@ import java.util.Map;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+
+import keadjustor.constraints.MaximumCalories;
+import keadjustor.constraints.MaximumGlycemicLoad;
+import keadjustor.constraints.MaximumProtein;
+import keadjustor.constraints.MaximumSaturatedFat;
+import keadjustor.constraints.MinimumCalories;
+import keadjustor.constraints.MinimumFiber;
+import keadjustor.constraints.MinimumProtein;
+import keadjustor.constraints.RecipeConstraint;
+
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.json.simple.JSONObject;
@@ -79,27 +89,36 @@ public enum KnowledgeBase {
 			
 			// Load courses
 			jsonArray = (JSONArray) jsonObj.get("courses");
-			Course.Builder courseProperties;
+			//Course.Builder courseProperties;
 			JSONArray interval;
-			for (Object course : jsonArray) {
-				JSONObject jsonCourse = (JSONObject) course;
+			for (Object rawCourse : jsonArray) {
+				JSONObject jsonCourse = (JSONObject) rawCourse;
 				name = (String) jsonCourse.get("name");
 				// Get all properties
-				courseProperties = new Course.Builder(name);
+				//courseProperties = new Course.Builder(name);
+				
+				ArrayList<RecipeConstraint> constraints = new ArrayList<RecipeConstraint>();				
 				interval = (JSONArray) jsonCourse.get("gl");
-				courseProperties.glycemicLoad((double) interval.get(0), (double) interval.get(1));
-				//interval = (JSONArray) jsonCourse.get("carbs");
-				//courseProperties.carbs((double) interval.get(0), (double) interval.get(1));
+				constraints.add(new MaximumGlycemicLoad((double) interval.get(1)));
+				
 				interval = (JSONArray) jsonCourse.get("fats");
-				courseProperties.fats((double) interval.get(0), (double) interval.get(1));
+				constraints.add(new MaximumSaturatedFat((double) interval.get(1))); 
+				
 				interval = (JSONArray) jsonCourse.get("proteins");
-				courseProperties.proteins((double) interval.get(0), (double) interval.get(1));
+				constraints.add(new MinimumProtein((double) interval.get(0)));
+				constraints.add(new MaximumProtein((double) interval.get(1)));
+				
 				interval = (JSONArray) jsonCourse.get("fibers");
-				courseProperties.fibers((double) interval.get(0), (double) interval.get(1));
+				constraints.add(new MinimumFiber((double) interval.get(0)));
+				
 				interval = (JSONArray) jsonCourse.get("calories");
-				courseProperties.calories((double) interval.get(0), (double) interval.get(1));
+				constraints.add(new MinimumCalories((double) interval.get(0)));
+				constraints.add(new MaximumCalories((double) interval.get(1)));
+				
+				Course course = new Course(name, constraints);				
+				
 				// Add..
-				courses.put(name.toLowerCase(), courseProperties.build());
+				courses.put(name.toLowerCase(), course);
 			}
 			
 			loaded = true;
@@ -156,7 +175,7 @@ public enum KnowledgeBase {
 		
 		if (original.getType().length() > 0) {
 			for (Ingredient substitute : ingredients.values()) {
-				if (substitute.getType().equals(original.getType())) {
+				if (substitute.getType().equals(original.getType()) && substitute != original) {
 					result.add(new Substitution(original, substitute, 1.0));
 				}
 			}

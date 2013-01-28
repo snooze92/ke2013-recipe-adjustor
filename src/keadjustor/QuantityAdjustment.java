@@ -16,7 +16,7 @@ public class QuantityAdjustment implements FixAction {
 	}
 
 	@Override
-	public boolean modifyRecipe(Recipe recipe) {
+	public boolean modify(Recipe recipe) {
 		// TODO: Could be improved
 		for (HasIngredient i : recipe.getIngredients()) {
 			if (i.getIngredient() == ingredient) {

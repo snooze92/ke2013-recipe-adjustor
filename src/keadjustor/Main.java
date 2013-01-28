@@ -1,4 +1,20 @@
 package keadjustor;
+import static ch.lambdaj.Lambda.*;
+
+import java.security.acl.LastOwnerException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import keadjustor.constraints.MaximumCalories;
+import keadjustor.constraints.MaximumGlycemicLoad;
+import keadjustor.constraints.MaximumProtein;
+import keadjustor.constraints.MaximumSaturatedFat;
+import keadjustor.constraints.MinimumCalories;
+import keadjustor.constraints.MinimumFiber;
+import keadjustor.constraints.MinimumProtein;
+import keadjustor.constraints.RecipeConstraint;
 
 public class Main {
 	public static void main(String[] args) {
@@ -15,81 +31,31 @@ public class Main {
 					// Everything was well loaded
 					System.out.println(String.format("\n[LOADED] %s", originalRecipe));
 					
-					Recipe newRecipe, bestRecipe, currentRecipe = originalRecipe;
-					double newEval, bestEval, currentEval = currentRecipe.evaluate(true);
-					FixAction bestFix;
-					// Adjustment loop:
-					while(currentEval > 0.0) {
-						bestRecipe = currentRecipe;
-						bestEval = currentEval;
-						bestFix = null;
-
-						// Try specific substitutions
-						for (HasIngredient i : currentRecipe.getIngredients()) {
-							for (FixAction fix : KnowledgeBase.INSTANCE.getSpecificSubstitutions(i.getIngredient())) {
-								newRecipe = new Recipe(currentRecipe);
-								fix.modifyRecipe(newRecipe);
-								newEval = newRecipe.evaluate();
-								
-								if (newEval < bestEval) {
-									// Best FixAction so far
-									bestEval = newEval;
-									bestRecipe = newRecipe;
-									bestFix = fix;
-								}
-							}
-						}
+					Recipe currentRecipe = originalRecipe;
+					RecipeConstraint violation; 
+					
+					// while currentRecipe does not fire a violation
+					while((violation = currentRecipe.verify()) != null) {
+						System.out.println("[LOG] ---- PCM cycle:");
+						System.out.println("[LOG] Violation: " + violation);
+						System.out.println(String.format("[LOG] GL=%.2f, Calories=%.2f, Fats=%.2f, Proteins=%.2f, Fibers=%.2f",
+								currentRecipe.getGlycemicLoad(),
+								currentRecipe.getCalories(),
+								currentRecipe.getFats(),
+								currentRecipe.getProteins(),
+								currentRecipe.getFibers()));
 						
-						if (bestFix == null) {
-							// Try type substitutions
-							for (HasIngredient i : currentRecipe.getIngredients()) {
-								for (FixAction fix : KnowledgeBase.INSTANCE.getTypeSubstitutions(i.getIngredient())) {
-									newRecipe = new Recipe(currentRecipe);
-									fix.modifyRecipe(newRecipe);
-									newEval = newRecipe.evaluate();
-									
-									if (newEval < bestEval) {
-										// Best FixAction so far
-										bestEval = newEval;
-										bestRecipe = newRecipe;
-										bestFix = fix;
-									}
-								}
-							}
-						}
-						
-						if (bestFix == null) {
-							// Try quantity adjustments
-							for (FixAction fix : currentRecipe.getPossibleAdjustments()) {
-								newRecipe = new Recipe(currentRecipe);
-								fix.modifyRecipe(newRecipe);
-								newEval = newRecipe.evaluate();
-								
-								if (newEval < bestEval) {
-									// Best FixAction so far
-									bestEval = newEval;
-									bestRecipe = newRecipe;
-									bestFix = fix;
-								}
-							}
-						}
-						
-						// Everything has been tried
-						if (bestFix == null) {
-							System.out.println("[LOG] No more possible fix action.");
-							break;
-						}
-						else {
-							// Keep best adjustment and reiterate
-							System.out.println(String.format("[LOG] %s => eval from %.2f down to %.2f",
-									bestFix, currentEval, bestEval));
-							currentRecipe = bestRecipe;
-							currentEval = bestEval;
-							
-							// Quick coding: evaluate(true) prints the calculation
-							currentRecipe.evaluate(true);
-							// System.out.println(String.format("\nNEW: %s", currentRecipe));
-						}
+						// get all possible fixactions 
+						ArrayList<FixAction> fixActions = critique(currentRecipe);
+						// select the best fixaction
+						FixAction bestFixAction = select(currentRecipe, violation, fixActions);
+						System.out.println("[LOG] " + bestFixAction);
+						System.out.println("[LOG] ---- END PCM cycle:");
+						// copy recipe and modify it with best fixaction
+						Recipe newRecipe = new Recipe(currentRecipe);
+						bestFixAction.modify(newRecipe);
+						// continue
+						currentRecipe = newRecipe;
 					}
 					
 					System.out.println(String.format("\n[ORIGINAL] %s", originalRecipe));
@@ -104,5 +70,48 @@ public class Main {
 			}
 		}
 	}
-
+	public static ArrayList<FixAction> critique(Recipe recipe) {
+		ArrayList<FixAction> fixActions = new ArrayList<FixAction>();				
+		
+		for(HasIngredient i : recipe.getIngredients()) {
+			for (FixAction fix : KnowledgeBase.INSTANCE.getSpecificSubstitutions(i.getIngredient())) {
+				fixActions.add(fix);
+			}
+			for (FixAction fix : KnowledgeBase.INSTANCE.getTypeSubstitutions(i.getIngredient())) {
+				fixActions.add(fix);
+			}
+		}
+		for (FixAction fix : recipe.getPossibleAdjustments()) {
+			fixActions.add(fix);
+		}
+		return fixActions;
+	}
+	
+	public static FixAction select(Recipe recipe, RecipeConstraint violation, ArrayList<FixAction> fixActions)
+	{
+		Map<Recipe, FixAction> recipeFixes = new HashMap<Recipe, FixAction>();
+		for(FixAction fa : fixActions) {
+			Recipe modifiedRecipe = new Recipe(recipe);
+			fa.modify(modifiedRecipe);
+			recipeFixes.put(modifiedRecipe, fa);
+		}		
+		
+		if(violation instanceof MaximumGlycemicLoad)
+			recipe = selectMin(recipeFixes.keySet(), on(Recipe.class).getGlycemicLoad());
+		if(violation instanceof MaximumCalories)
+			recipe = selectMin(recipeFixes.keySet(), on(Recipe.class).getCalories());
+		if(violation instanceof MinimumCalories)
+			recipe = selectMax(recipeFixes.keySet(), on(Recipe.class).getCalories());
+		if(violation instanceof MaximumSaturatedFat)
+			recipe = selectMin(recipeFixes.keySet(), on(Recipe.class).getFats());
+		if(violation instanceof MaximumProtein)
+			recipe = selectMin(recipeFixes.keySet(), on(Recipe.class).getProteins());
+		if(violation instanceof MinimumProtein)
+			recipe = selectMax(recipeFixes.keySet(), on(Recipe.class).getProteins());
+		if(violation instanceof MinimumFiber)
+			recipe = selectMax(recipeFixes.keySet(), on(Recipe.class).getFibers());
+					
+		// return best fix
+		return recipeFixes.get(recipe);
+	}
 }

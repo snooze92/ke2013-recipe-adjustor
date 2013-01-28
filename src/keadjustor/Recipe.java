@@ -5,6 +5,16 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import keadjustor.constraints.MaximumCalories;
+import keadjustor.constraints.MaximumGlycemicLoad;
+import keadjustor.constraints.MaximumProtein;
+import keadjustor.constraints.MaximumSaturatedFat;
+import keadjustor.constraints.MinimumCalories;
+import keadjustor.constraints.MinimumFiber;
+import keadjustor.constraints.MinimumProtein;
+import keadjustor.constraints.RecipeConstraint;
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -97,7 +107,8 @@ public class Recipe {
 		return sum(ingredients, on(HasIngredient.class).getGlycemicLoad());		
 	}
 	public double getFats() {
-		return sum(ingredients, on(HasIngredient.class).getFats());
+		double fats = sum(ingredients, on(HasIngredient.class).getFats());
+		return fats;
 	}
 	public double getProteins() {
 		return sum(ingredients, on(HasIngredient.class).getProteins());
@@ -109,41 +120,34 @@ public class Recipe {
 		return sum(ingredients, on(HasIngredient.class).getCalories());
 	}
 	
-	public double evaluate() {
-		return evaluate(false);
-	}
-	public double evaluate(boolean print) {
-		double glError = Math.abs(course.checkGlycemicLoad(getGlycemicLoad()));
-		double fatsError = Math.abs(course.checkFats(getFats()));
-		double proteinsError = Math.abs(course.checkProteins(getProteins()));
-		double fibersError = Math.abs(course.checkFibers(getFibers()));
-		double caloriesError = Math.abs(course.checkCalories(getCalories()));
-		// TODO: Have static final at the top, with 5 smart weights
-		double error = glError + fatsError + proteinsError + fibersError + 0.1 * caloriesError;
-		
-		if (print) {
-			System.out.println(String.format("[LOG] Errors=%.2f (GL=%.2f; fats=%.2f; proteins=%.2f; fibers=%.2f; calories=%.2f)",
-					error, glError, fatsError, proteinsError, fibersError, caloriesError));
+	public RecipeConstraint verify() {
+		for(RecipeConstraint constraint : course.getConstraints())
+		{
+			if(constraint instanceof MaximumGlycemicLoad)
+				((MaximumGlycemicLoad) constraint).verify(getGlycemicLoad());
+			
+			if(constraint instanceof MinimumCalories)
+				((MinimumCalories) constraint).verify(getCalories());
+			if(constraint instanceof MaximumCalories)
+				((MaximumCalories) constraint).verify(getCalories());
+			
+			if(constraint instanceof MinimumProtein)
+				((MinimumProtein) constraint).verify(getProteins());
+			if(constraint instanceof MaximumProtein)
+				((MaximumProtein) constraint).verify(getProteins());
+			
+			if(constraint instanceof MinimumFiber)
+				((MinimumFiber) constraint).verify(getFibers());
+			
+			if(constraint instanceof MaximumSaturatedFat)
+				((MaximumSaturatedFat) constraint).verify(getFats());
+			
+			if(constraint.isViolated())
+				return constraint;
 		}
-		return (glError == 0 && error < 20) ? 0 : error;
+		return null;
 	}
 	
-	// Checks
-	public double checkGlycemicLoad() {
-		return course.checkGlycemicLoad(getGlycemicLoad());
-	}
-	public double checkFats() {
-		return course.checkFats(getFats());
-	}
-	public double checkProteins() {
-		return course.checkProteins(getProteins());
-	}
-	public double checkFibers() {
-		return course.checkFibers(getFibers());
-	}
-	public double checkCalories() {
-		return course.checkCalories(getCalories());
-	}	
 	public int getServings() {
 		return servings;
 	}

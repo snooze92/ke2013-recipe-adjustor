@@ -1,5 +1,5 @@
 package keadjustor;
 
 public interface FixAction {
-	public boolean modifyRecipe(Recipe recipe);
+	public boolean modify(Recipe recipe);
 }
