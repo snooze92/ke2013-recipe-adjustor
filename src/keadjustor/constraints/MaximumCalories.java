@@ -11,9 +11,9 @@ public class MaximumCalories extends ParameterConstraint<Double> {
 	@Override
 	public ParameterConstraint<Double> verify(Double in) {
 		if(in > this.value)
-		{
 			violated = true;
-		}
+		else
+			violated = false;
 		return this;
 	}
 }

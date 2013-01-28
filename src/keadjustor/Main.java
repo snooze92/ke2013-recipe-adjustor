@@ -31,13 +31,13 @@ public class Main {
 					// Everything was well loaded
 					System.out.println(String.format("\n[LOADED] %s", originalRecipe));
 					
-					Recipe currentRecipe = originalRecipe;
+					Recipe currentRecipe = new Recipe(originalRecipe);
 					RecipeConstraint violation; 
 					
 					// while currentRecipe does not fire a violation
 					int i = 0;
 					while((violation = currentRecipe.verify()) != null) {
-						if (i == 1000) break; // exit long loops 
+						if (i == 5000) break; // exit long loops 
 						i++;
 						System.out.println("[LOG] ---- PCM cycle:");
 						System.out.println("[LOG] Violation: " + violation);

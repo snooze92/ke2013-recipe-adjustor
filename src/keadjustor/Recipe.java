@@ -13,6 +13,7 @@ import keadjustor.constraints.MaximumSaturatedFat;
 import keadjustor.constraints.MinimumCalories;
 import keadjustor.constraints.MinimumFiber;
 import keadjustor.constraints.MinimumProtein;
+import keadjustor.constraints.ParameterConstraint;
 import keadjustor.constraints.RecipeConstraint;
 
 import org.json.simple.JSONArray;
@@ -121,54 +122,63 @@ public class Recipe {
 	}
 	
 	public RecipeConstraint verify() {
+		ParameterConstraint<Double> currentConstraint = null;
+		RecipeConstraint mostViolated = null;
+		double highest = 0.0, perc, curValue = 0.0;
 		for(RecipeConstraint constraint : course.getConstraints())
 		{	
 			if(constraint instanceof MaximumGlycemicLoad)
 			{
-				((MaximumGlycemicLoad) constraint).verify(getGlycemicLoad());							
-				if(constraint.isViolated())
-					return constraint;
-			}
-			if(constraint instanceof MinimumCalories)
+				curValue = getGlycemicLoad();
+				currentConstraint = ((MaximumGlycemicLoad) constraint).verify(curValue);
+			}			
+			else if(constraint instanceof MinimumCalories)
 			{
-				((MinimumCalories) constraint).verify(getCalories());
-				if(constraint.isViolated())
-					return constraint;
+				curValue = getCalories();
+				currentConstraint = ((MinimumCalories) constraint).verify(curValue);
 			}
-			if(constraint instanceof MaximumCalories)
+			else if(constraint instanceof MaximumCalories)
 			{
-				((MaximumCalories) constraint).verify(getCalories());
-				if(constraint.isViolated())
-					return constraint;
+				curValue = getCalories();
+				currentConstraint = ((MaximumCalories) constraint).verify(curValue);
 			}
-			if(constraint instanceof MinimumProtein)
+			else if(constraint instanceof MinimumProtein)
 			{
-				((MinimumProtein) constraint).verify(getProteins());
-				if(constraint.isViolated())
-					return constraint;
+				curValue = getProteins();
+				currentConstraint = ((MinimumProtein) constraint).verify(curValue);
 			}
-			if(constraint instanceof MaximumProtein)
+			else if(constraint instanceof MaximumProtein)
 			{
-				((MaximumProtein) constraint).verify(getProteins());
-				if(constraint.isViolated())
-					return constraint;
+				curValue = getProteins();
+				currentConstraint = ((MaximumProtein) constraint).verify(curValue);
+			}			
+			else if(constraint instanceof MinimumFiber) 
+			{
+				curValue = getFibers();
+				currentConstraint = ((MinimumFiber) constraint).verify(curValue);
+			}			
+			else if(constraint instanceof MaximumSaturatedFat)
+			{
+				curValue = getFats();
+				currentConstraint = ((MaximumSaturatedFat) constraint).verify(curValue);
 			}
 			
-			if(constraint instanceof MinimumFiber) 
+			if(constraint.isViolated())
 			{
-				((MinimumFiber) constraint).verify(getFibers());
-				if(constraint.isViolated())
-					return constraint;
+				if(mostViolated == null)
+					mostViolated = constraint;
+				
+				perc = curValue / currentConstraint.getValue();
+				//System.out.println(constraint + " " + perc);
+				if(perc > highest)
+				{
+					highest = perc;
+					mostViolated = constraint;
+				}
 			}
 			
-			if(constraint instanceof MaximumSaturatedFat)
-			{
-				((MaximumSaturatedFat) constraint).verify(getFats());
-				if(constraint.isViolated())
-					return constraint;
-			}
 		}
-		return null;
+		return mostViolated;
 	}
 	
 	public int getServings() {
